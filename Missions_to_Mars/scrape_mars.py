@@ -1,23 +1,23 @@
 from bs4 import BeautifulSoup as bs
 from splinter import Browser
 from webdriver_manager.chrome import ChromeDriverManager
-import requests
 import pandas as pd
 import time
 
 
 def init_browser():
     executable_path = {'executable_path': 'C:\Windows\chromedriver'}
-    browser = Browser('chrome', **executable_path, headless=False)
+    return Browser('chrome', **executable_path, headless=False)
 
-mars_data = {}
 
 
 def scraped_news():
-    #initialize the browser
-    browser = init_browser()
+    mars_data = {}
 
+    browser = init_browser()
+    
     url = "https://mars.nasa.gov/news/"
+
     browser.visit(url)
 
     time.sleep(1)
@@ -27,14 +27,11 @@ def scraped_news():
     soup = bs(html, "html.parser")
 
     #get article title
-    article_title = soup.select(".list_text .content_title")
-    news_title = [at.get_text() for at in article_title]
-    news_title[0]
+    news_title = soup.find("div", class_="list_text").find("div", class_="content_title").find("a").text
 
     #get the news paragraph
-    news_paragraph = soup.select(".list_text .article_teaser_body")
-    news_p = [np.get_text() for np in news_paragraph]
-    news_p[0]
+    news_p = soup.find("div", class_="list_text").find("div", class_="article_teaser_body").text
+    
 
     mars_data["news_title"] = news_title
     mars_data["news_p"] = news_p
@@ -44,7 +41,10 @@ def scraped_news():
     #return dictionary results
     return mars_data
 
+
 def scraped_facts():
+    mars_data = {}
+     
 
     url = "https://space-facts.com/mars/"
     
@@ -64,11 +64,13 @@ def scraped_facts():
     return mars_data
 
 
-def scraped_hemispheres:
+def scraped_hemispheres():
+    mars_data = {}
+
     #initialize browser
     browser = init_browser()
 
-    url = "https://mars.nasa.gov/news/"
+    url = "https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars"
     browser.visit(url)
 
     time.sleep(1)
@@ -102,26 +104,9 @@ def scraped_hemispheres:
 
         mars_data["hemispheres"] = hemispheres
 
-        browser.quit()
 
-        return mars_data
+    browser.quit()
 
-
-
-
-
-
-   
-
-
-
-
-
-
-
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
+    return mars_data
 
 
