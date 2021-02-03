@@ -12,8 +12,7 @@ def init_browser():
 
 
 def scraped_news():
-    mars_data = {}
-
+    
     browser = init_browser()
     
     url = "https://mars.nasa.gov/news/"
@@ -32,40 +31,31 @@ def scraped_news():
     #get the news paragraph
     news_p = soup.find("div", class_="list_text").find("div", class_="article_teaser_body").text
     
-
-    mars_data["news_title"] = news_title
-    mars_data["news_p"] = news_p
+    mars_news = {"news_title": news_title, "news_p": news_p}
 
     browser.quit()
 
     #return dictionary results
-    return mars_data
+    return mars_news
 
 
 def scraped_facts():
-    mars_data = {}
-     
-
+    
     url = "https://space-facts.com/mars/"
     
     #scrape url with pandas
-    facts_df = pd.read_html(url)
+    facts = pd.read_html(url)
 
-    df = facts_df[0]
+    df = facts[0]
     df.columns=["Fact", ""]
     df.set_index("Fact", inplace=True)
 
-    # html_table.replace("\n", "")
+    mars_facts = df.to_html()
 
-    mars_facts = df.to_html('table.html')
-
-    mars_data['facts_df'] = mars_facts
-
-    return mars_data
+    return mars_facts
 
 
 def scraped_hemispheres():
-    mars_data = {}
 
     #initialize browser
     browser = init_browser()
@@ -79,7 +69,7 @@ def scraped_hemispheres():
     html = browser.html
     soup = bs(html, "html.parser")
 
-    hemispheres = []
+    mars_hemispheres = []
 
     results = soup.find('div', class_='result-list')
     items = results.find_all('div', class_='item')
@@ -100,13 +90,18 @@ def scraped_hemispheres():
     
         new_url = url + image_url
     
-        hemispheres.append({'Title': title, 'Image_URL': image_url})
-
-        mars_data["hemispheres"] = hemispheres
-
+        mars_hemispheres.append({'Title': title, 'Image_URL': image_url})
 
     browser.quit()
 
-    return mars_data
+    return mars_hemispheres
 
+def scrape():
+    mars_info = {}
+    mars_news = scraped_news()
+    mars_info["mars_title"] = mars_news["news_title"]
+    mars_info["mars_paragraph"] = mars_news["news_p"]
+    mars_info["mars_facts"] = scraped_facts()
+    mars_info["mars_hemispheres"] = scraped_hemispheres()
 
+    return mars_info

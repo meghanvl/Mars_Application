@@ -5,6 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        
         <title>Mars App</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     </head>
@@ -13,21 +14,56 @@
             <div class="container">
                 <div class="jumbotron text-center">
                     <h1>Mission to Mars</h1>
-                    <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Scrape New Data</a></p>
+                    <p><a class="btn btn-primary btn-lg" style="background-color: rgb(4, 69, 90);" href="/scrape" role="button">Scrape New Data</a></p>
                 </div>
-      
-                <div class="row" id="craiglist-listings">
-                    <div class="col-md-12">
-                        <h2>Latest Mars News</h2>
-                        <h3>{{mars_data.news.news_title}}</h3>
-                        <p>{{mars_data.news.news_p}}</p>
-                        <br>
-                        <br>                
-                        <p>{{mars_data.facts.mars_facts}}</p>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="box" >
+                                <h3>Latest Mars News:</h3>
+                                <hr>
+                                <h4>{{mars.mars_title}}</h4>
+                                <p>{{mars.mars_paragraph}}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="box">
+                                <h3>Facts About Mars:</h3>
+                                <hr>
+                                <div style="max-width: 450px; max-height: 150px; font-size: 15px;"></div>
+                                <p>{{mars.mars_facts|safe}}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-      
             </div>
+
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 style="text-align: center;">Mars Hemispheres:</h3>
+                            <table>
+                            {% for hemisphere in mars.mars_hemispheres %}
+                                <tr>
+                                    <h4>{{ hemisphere.Title }}</h4>
+                                    <img src="{{ hemisphere.Image_URL }}" alt="{{ hemisphere.Title }}">
+                                    <th>{{ hemisphere.Title }}</th>
+                                    <td>{{ hemisphere.Image_URL }}</td>
+                                </tr>
+                            {% endfor %}
+                            </table>
+                                
+                        </div>
+                    </div>
+                </div>
+            </div>
+                
+            
         </body>
-      
 </html>
