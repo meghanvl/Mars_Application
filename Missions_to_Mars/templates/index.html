@@ -7,7 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         
         <title>Mars App</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     </head>
 
         <body>
@@ -17,52 +17,53 @@
                     <p><a class="btn btn-primary btn-lg" style="background-color: rgb(4, 69, 90);" href="/scrape" role="button">Scrape New Data</a></p>
                 </div>
 
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="box" >
-                                <h3>Latest Mars News:</h3>
-                                <hr>
-                                <h4>{{mars.mars_title}}</h4>
-                                <p>{{mars.mars_paragraph}}</p>
+                <div class="card">
+                    <div class="card-body">
+                        <h3 style="background-color: rgb(4, 69, 90); color: white;">Latest Mars News:</h3>
+                        <hr>
+                        <h4>{{mars.mars_title}}</h4>
+                        <p>{{mars.mars_paragraph}}</p>
+                    </div>
+                </div>
+                <br>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 style="background-color: rgb(4, 69, 90); color: white;">Facts About Mars:</h3>
+                            <hr>
+                            <div style="margin-left: 330px; font-size: 15px; text-align: left;">
+                            {{mars.mars_facts|safe}}
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="card">
+                    <h3 style="text-align: center; background-color: rgb(4, 69, 90); color: white;">Mars Hemispheres</h3>
+                        <div class="card-deck">
+                            <hr>
+                            <div class="col-md-12">
+                                <div class="row">
+                                {% for hemisphere in mars.mars_hemispheres %}
+                                <div class="col-md-6">
+                                    <div class="card text-white bg-dark" style="margin: 30px;">
+                                        <img class="card-img-top" src="{{ hemisphere.Image_URL }}" />
+                                        <div class="card-body">
+                                            <p class="card-text">{{ hemisphere.Title }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="box">
-                                <h3>Facts About Mars:</h3>
-                                <hr>
-                                <div style="max-width: 450px; max-height: 150px; font-size: 15px;"></div>
-                                <p>{{mars.mars_facts|safe}}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
-
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h3 style="text-align: center;">Mars Hemispheres:</h3>
-                            <table>
-                            {% for hemisphere in mars.mars_hemispheres %}
-                                <tr>
-                                    <h4>{{ hemisphere.Title }}</h4>
-                                    <img src="{{ hemisphere.Image_URL }}" alt="{{ hemisphere.Title }}">
-                                    <th>{{ hemisphere.Title }}</th>
-                                    <td>{{ hemisphere.Image_URL }}</td>
-                                </tr>
-                            {% endfor %}
-                            </table>
-                                
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
                 
             
         </body>

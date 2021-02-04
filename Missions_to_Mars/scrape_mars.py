@@ -78,7 +78,7 @@ def scraped_hemispheres():
     
         title = item.find('h3').text
     
-        partial_url = item.find('a')['href']
+        partial_url = item.find('img', class_='thumb')['src']
     
         image_url = "https://astrogeology.usgs.gov/" + partial_url
     
@@ -91,6 +91,7 @@ def scraped_hemispheres():
         new_url = url + image_url
     
         mars_hemispheres.append({'Title': title, 'Image_URL': image_url})
+
 
     browser.quit()
 
